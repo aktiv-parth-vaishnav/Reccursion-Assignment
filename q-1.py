@@ -1,16 +1,16 @@
-def find_file(folder, filetofind, path=""):
-    for name, content in folder.items():
-        current_path = f"{path}/{name}"
-        print(current_path)
-        if name == filetofind:
-            return current_path
-        elif isinstance(content, dict):
-            result = find_file(content, filetofind, current_path)
-            if result:
-                return result
+def fin(file_to_find, folder):
+    for name, subfolder in folder.items():
+        print(name)
+        print(subfolder)
+        if name == file_to_find:
+            return "/" + name
+        elif isinstance(subfolder, dict):
+            path = fin(file_to_find, subfolder)
+            if path:
+                return "/" + name + path
     return None
 
-filesystem = {
+file_system = {
     "documents": {
         "work": {
             "report.docx": None,
@@ -20,7 +20,7 @@ filesystem = {
             "photos": {
                 "vacation.jpg": None,
                 "birthday.png": None,
-            }
+            },
         },
     },
     "downloads": {
@@ -33,6 +33,10 @@ filesystem = {
     },
 }
 
-filetofind = "birthday.png"
-result = find_file(filesystem, filetofind)
-print(result)
+file_to_find = "music"
+result = fin(file_to_find, file_system)
+
+if result:
+    print(f"File '{file_to_find}' found at: {result}")
+else:
+    print(f"File '{file_to_find}' not found.")
